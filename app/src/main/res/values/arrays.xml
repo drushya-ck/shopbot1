@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sub_categories">
+        <item>Mobile</item>
+        <item>Televisions</item>
+        <item>Laptops</item>
+        <item>Cameras</item>
+    </string-array>
+    <string-array name="mobile_price">
+        <item>Under Rs 1000</item>
+        <item>Rs 1000 - Rs 5000</item>
+        <item>Over Rs 5000</item>
+    </string-array>
+    <string-array name="mobile_brand">
+        <item>Samsung</item>
+        <item>Vivo</item>
+        <item>Apple</item>
+        <item>Vivo</item>
+    </string-array>
+    <string-array name="laptop_price">
+        <item>Under Rs 10000</item>
+        <item>Rs 10000 - Rs 50000</item>
+        <item>Over Rs 50000</item>
+    </string-array>
+    <string-array name="laptop_brand">
+        <item>HP</item>
+        <item>Dell</item>
+        <item>Apple</item>
+        <item>Acer</item>
+    </string-array>
+    <string-array name="tv_price">
+        <item>Under Rs 20000</item>
+        <item>Rs 10000 - Rs 60000</item>
+        <item>Over Rs 60000</item>
+    </string-array>
+    <string-array name="tv_brand">
+        <item>Samsung</item>
+        <item>LG</item>
+        <item>Vu</item>
+        <item>Sony</item>
+    </string-array>
+    <string-array name="camera_price">
+        <item>Under Rs 5000</item>
+        <item>Rs 5000 - Rs 15000</item>
+        <item>Over Rs 15000</item>
+    </string-array>
+    <string-array name="camera_brand">
+        <item>Nikon</item>
+        <item>Canon</item>
+        <item>Olympus</item>
+        <item>Sony</item>
+    </string-array>
+    <string-array name="discount">
+        <item>Below 30%</item>
+        <item>30%-60%</item>
+        <item>Above 60%</item>
+    </string-array>
+</resources>

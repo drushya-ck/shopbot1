@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="50dp"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            >
+
+
+            <EditText
+                android:id="@+id/atvUsernameReg"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/rounded_rect"
+                android:drawableLeft="@drawable/icon_person"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/icon_person"
+                android:text="Admin"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/white"
+
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/atvEmailReg"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_rect"
+                android:drawableLeft="@drawable/icon_mail"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/icon_mail"
+                android:text="admin@gmail.com"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/white"
+
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/atvPhoneReg"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_rect"
+                android:drawableLeft="@drawable/icon_phone"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/icon_phone"
+                android:text="9999999999"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/white"
+
+                android:textSize="15sp" />
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+
+                    android:background="@drawable/btnsignup_gradient"
+                    android:text="Cancel"
+                    android:textColor="#FFFFFF" />
+
+
+
+
+            <Button
+                android:id="@+id/save"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/btnsignup_gradient"
+                android:text="Save"
+                android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</RelativeLayout>
+
