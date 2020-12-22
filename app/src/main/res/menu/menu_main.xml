@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Sub Categories">
+        android:id="@+id/fav"
+        android:orderInCategory="100"
+        android:title="Sub Categories"
+        app:showAsAction="never"
+        <menu>
+            <group android:checkableBehavior="all">
+                <item
+                    android:id="@+id/i2"
+                    app:showAsAction="never"
+                    android:title="Televisions"
+                    android:orderInCategory="2">
+                </item>
+                <item
+                    android:id="@+id/i3"
+                    app:showAsAction="never"
+                    android:title="Laptops"
+                    android:orderInCategory="3">
+                </item>
+
+                <item
+                    android:id="@+id/i4"
+                    android:title="Cameras"
+                    app:showAsAction="never"
+                    android:orderInCategory="4"/>
+            </group>
+        </menu>
+
+    </item>
+</menu>
