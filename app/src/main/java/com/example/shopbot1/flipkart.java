@@ -17,9 +17,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+//#container > div > div._3LxdjL._3NzWOH > div._3FqKqJ > div.E2-pcE._3zjXRo > div:nth-child(2) > div:nth-child(2) > div > div > div > a > div.MIXNux > div._3wLduG > div > span > div > label > div::before
 public class flipkart {
-    String url,productName,productPrice,productRating,imageUrl="",productUrl="";
+    String url,productName,productPrice,productRating,imageUrl="",productUrl="",productDesc="";
+    boolean fav=false;
     ArrayList<ItemsList.item> flipkartProducts =new ArrayList<>();
     public String getProductName(){
         return productName;
@@ -48,7 +49,8 @@ public class flipkart {
                     Document document = Jsoup.connect(url).get();
                     Elements content = document.getElementsByClass("E2-pcE _3zjXRo");
                     Elements items = content.select("div:nth-child(2) > div._2pi5LC.col-12-12");
-                    if (items.select("div._13oc-S > div > div ").first().children().size() > 2) {
+//                   Log.d("compare",items.select("div._13oc-S > div").attr("style").trim().equals("width:25%")+"");
+                    if (items.select("div._13oc-S > div").attr("style").trim().equals("width:25%")) {
                         System.out.println("yoooooooooooooooooooo");
                         for (Element m : items.select("div._13oc-S > div > div")) {
                             // c++;
@@ -59,8 +61,21 @@ public class flipkart {
                             if (m.select("a").attr("title").contains("/")) {
                                 continue;
                             }
+                            Log.d("feature",m.select("a").attr("title"));
+                            productDesc=m.select("a").attr("title");
                             //ItemsList.item i = new ItemsList.item();
-                            productName = m.select("a").attr("title");
+//                            productName = m.select("a").attr("title");
+                            if (m.select("a").attr("title").contains("/")) {
+                                n = m.select("a").attr("title");
+                                n = n.replace("/", " ");
+                                flag = 1;
+                            }
+                            // ItemsList.item i = new ItemsList.item();
+                            if (flag == 1) {
+                                productName = n;
+                            } else {
+                                productName = m.select("a").attr("title");
+                            }
                             productPrice = m.select("a > div > div:nth-child(1)").text();
                             productRating = m.select("div:nth-child(4) > span:nth-child(1)").text();
                             productUrl=m.select("a").attr("href");
@@ -68,7 +83,7 @@ public class flipkart {
                             addProductToList();
                         }
                     }
-                    else {
+                    else if(items.select("div._13oc-S > div").attr("style").trim().equals("width:100%")){
                         System.out.println("hahahahhahahhahahhahhahah ");
                         for (Element m : items.select("div._13oc-S > div > div")) {
                             if (m.select("div._30jeq3._1_WHN1").text().isEmpty()) {
@@ -79,6 +94,8 @@ public class flipkart {
                                 System.out.println("emptyyyyyyy name ");
                                 continue;
                             }
+                            Log.d("feature",m.select("div.col.col-7-12").text());
+                            productDesc=m.select("div.col.col-7-12").text();
 //                            if(m.select("div.CXW8mj > img").attr("alt").isEmpty()){
 //                                System.out.println("emptyyyyyyy imageurl ");
 //                            }else System.out.println("nottt emptyyyyyyy imageurl ="+m.select("div.CXW8mj > img").attr("alt"));
@@ -115,6 +132,7 @@ public class flipkart {
 //        i.img_url=imageUrl;
         i.website="Flipkart";
         i.productUrl="https://www.flipkart.com"+productUrl;
+        i.productDesc=this.productDesc;
         flipkartProducts.add(i);
     }
 

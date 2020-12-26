@@ -235,7 +235,7 @@ public class productList extends AppCompatActivity implements  View.OnClickListe
         @Override
         protected void onPostExecute(Void aVoid) {
             //super.onPostExecute(aVoid);
-            progressBar.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.GONE);
 
             recyclerAdapter = new recyclerAdapter(mainList);
             recyclerAdapter.notifyDataSetChanged();
@@ -248,17 +248,27 @@ public class productList extends AppCompatActivity implements  View.OnClickListe
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void mergeLists(){
         mainList.clear();
-        if(filter_chip.contains("Flipkart")|| filter_chip.isEmpty()) {
-            mainList= Stream.of(mainList,flip.getProductList())
-                    .flatMap(x -> x.stream())
-                    .collect(Collectors.toList());
-            Log.d("list_inmerge","list="+mainList.toString());
-        }
-        if(filter_chip.contains("Snapdeal")|| filter_chip.isEmpty()) {
-            mainList= Stream.of(mainList,snap.getProductList())
-                    .flatMap(x -> x.stream())
-                    .collect(Collectors.toList());
-            Log.d("list_inmerge","list="+mainList.toString());
+        int i=0;
+        while(i<flip.getProductList().size() || i<snap.getProductList().size()) {
+            if (filter_chip.contains("Flipkart") || filter_chip.isEmpty()) {
+                if(i<flip.getProductList().size()) {
+                    mainList.add(flip.getProductList().get(i));
+//                mainList = Stream.of(mainList, flip.getProductList())
+//                        .flatMap(x -> x.stream())
+//                        .collect(Collectors.toList());
+                    Log.d("list_inmerge", "list=" + mainList.toString());
+                }
+            }
+            if (filter_chip.contains("Snapdeal") || filter_chip.isEmpty()) {
+                if(i<snap.getProductList().size()) {
+                    mainList.add( snap.getProductList().get(i));
+//                mainList = Stream.of(mainList, snap.getProductList())
+//                        .flatMap(x -> x.stream())
+//                        .collect(Collectors.toList());
+                    Log.d("list_inmerge", "list=" + mainList.toString());
+                }
+            }
+            i++;
         }
         if(sortBy.equalsIgnoreCase("price- low to high")) {
             Collections.sort(mainList, new Comparator<ItemsList.item>() {
@@ -284,7 +294,7 @@ public class productList extends AppCompatActivity implements  View.OnClickListe
                 }
             });
         }
-
+//        mainList=mainList.stream().distinct().collect(Collectors.toList());
         //alternating addition of items from diff e-commerce websites for relevance
         //add comparator to compare price for price- low to high and high to low
         //add comparator to compare rate for popularity

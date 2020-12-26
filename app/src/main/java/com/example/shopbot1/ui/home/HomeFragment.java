@@ -39,17 +39,17 @@ public class HomeFragment extends Fragment{
         c1=(CardView) root.findViewById(R.id.card1);
         c1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i=new Intent(a, SubCatProductList.class);
+                Intent i=new Intent(a, productList.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("key", "Electronics");
-                i.putExtras(bundle);
+                bundle.putString("key", "mobiles");
+                i.putExtras(bundle); 
                 startActivity(i);
             }
         });
         c2=(CardView)root.findViewById(R.id.card2);
         c2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i=new Intent(a, SubCatProductList.class);
+                Intent i=new Intent(a, productList.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("key", "Fashion");
                 i.putExtras(bundle);
@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment{
         c3=(CardView)root.findViewById(R.id.card3);
         c3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i=new Intent(a, SubCatProductList.class);
+                Intent i=new Intent(a, productList.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("key", "Books");
                 i.putExtras(bundle);
@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment{
         c4=(CardView)root.findViewById(R.id.card4);
         c4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i=new Intent(a, SubCatProductList.class);
+                Intent i=new Intent(a, productList.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("key", "Grocery");
                 i.putExtras(bundle);
@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment{
         c5=(CardView)root.findViewById(R.id.card5);
         c5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i=new Intent(a, SubCatProductList.class);
+                Intent i=new Intent(a, productList.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("key", "Beauty");
                 i.putExtras(bundle);
@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment{
         c6=(CardView)root.findViewById(R.id.card6);
         c6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i=new Intent(a, SubCatProductList.class);
+                Intent i=new Intent(a, productList.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("key", "Kitchen");
                 i.putExtras(bundle);

@@ -43,6 +43,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.ProxySelector;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,10 +87,10 @@ public class ItemsList extends AppCompatActivity  {
 
     }
 
-    public static class item{
+    public static class item implements Serializable {
         String id;
-        public String name,price,rating,img_url="",website="",productUrl="";
-        public boolean fav;
+        public String name,price,rating,img_url="",website="",productUrl="",productDesc="";
+        public boolean fav=false;
         public item(){name="";price="";rating="";img_url="";fav=false;}
         public item(String name,String price,String rating,String img_url){
             this.name=name;
@@ -138,5 +139,6 @@ public class ItemsList extends AppCompatActivity  {
         public String getWebsite(){return website;}
         public void setProductUrl(String productUrl){ this.productUrl=productUrl;}
         public String getProductUrl(){return productUrl;}
+        public String getProductDesc(){return productDesc;}
     }
 }

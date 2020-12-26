@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopbot1.R;
+import com.example.shopbot1.firebase;
 import com.example.shopbot1.recyclerAdapter;
 import com.example.shopbot1.ui.home.ItemsList;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,12 +44,13 @@ public class SlideshowFragment extends Fragment {
 
     private SlideshowViewModel slideshowViewModel;
     //ConstraintLayout parentLayout;
-     ArrayList<ItemsList.item> list =new ArrayList<ItemsList.item>();;
+    ArrayList<ItemsList.item> list = new ArrayList<ItemsList.item>();
+    ;
     RecyclerView recyclerView;
-    recyclerAdapter recyclerAdap;
-    FirebaseFirestore db=FirebaseFirestore.getInstance();
-    View root ;
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("favourites");
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    View root;
+
+    //    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("favourites");
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel =
@@ -65,27 +67,9 @@ public class SlideshowFragment extends Fragment {
     }
 
 
-    public void disp(){
+    public void disp() {
+        firebase fb = new firebase();
+        list = fb.getFav(recyclerView,getActivity());
 
-        mDatabase.addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ItemsList.item item = ds.getValue(ItemsList.item.class);
-                    Log.d("retrieve-hehe", "" + item.getName());
-                    list.add(item);
-                }
-                recyclerAdap = new recyclerAdapter(list);
-                recyclerView.setAdapter(recyclerAdap);
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-                recyclerView.addItemDecoration(dividerItemDecoration);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("firebase_retrieval", "loadPost:onCancelled", databaseError.toException());
-            }
-            });
     }
 }
