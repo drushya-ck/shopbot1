@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopbot1.ui.home.ItemsList;
+import com.example.shopbot1.ui.slideshow.SlideshowFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,11 +23,11 @@ public class firebase {
     ItemsList.item favItem;
     ArrayList<ItemsList.item> list ;
     boolean flag=false;
-    recyclerAdapter ra;
+
     public DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("favourites");
 
     public boolean existsInFav(String trim){
-
+            flag=false;
 //        Log.d("regex",trim);
         mDatabase.child(trim).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -58,7 +59,6 @@ public class firebase {
     }
     public ArrayList<ItemsList.item> getFav(RecyclerView rv, Activity ac){
         list=new ArrayList<ItemsList.item>();
-        ra.moviesList.clear();
         mDatabase.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -68,7 +68,7 @@ public class firebase {
                     list.add(item);
 //                }
                 }
-                ra = new recyclerAdapter(list);
+                recyclerAdapter ra = new recyclerAdapter(list,ac.getApplicationContext());
                 rv.setAdapter(ra);
                 DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ac, DividerItemDecoration.VERTICAL);
                 rv.addItemDecoration(dividerItemDecoration);

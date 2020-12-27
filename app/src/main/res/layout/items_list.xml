@@ -86,18 +86,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchview" />
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
 
-    <!--Button
-        android:id="@+id/sortby_but"
-        android:layout_width="102dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="280dp"
-        android:layout_marginLeft="280dp"
-        android:layout_marginTop="556dp"
-        android:text="Sort"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/sortby_floatingActionButton"

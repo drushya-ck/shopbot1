@@ -55,7 +55,7 @@ public class snapdeal {
             Elements content = document.select("#products");
             for(Element item:content.select("section")){
 //                Log.d("snapdeal_name","name=="+item.select("div.product-tuple-description > div.product-desc-rating > a > p").attr("title"));
-                productName=item.select("div.product-tuple-description > div.product-desc-rating > a > p").attr("title");
+                productName=item.select("div.product-tuple-description > div.product-desc-rating > a > p.product-title").attr("title");
 //                Log.d("snapdeal_price","price=="+item.select("span.lfloat.product-price").attr("data-price"));
                 productPrice=item.select("span.lfloat.product-price").attr("data-price");
                 if(!item.select("div.product-tuple-description > div.product-desc-rating > a > div.clearfix.rating.av-rating").select("div.filled-stars").attr("style").replace("width:","").replace("%","").isEmpty()) {

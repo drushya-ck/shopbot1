@@ -20,8 +20,9 @@ import java.util.regex.Pattern;
 //#container > div > div._3LxdjL._3NzWOH > div._3FqKqJ > div.E2-pcE._3zjXRo > div:nth-child(2) > div:nth-child(2) > div > div > div > a > div.MIXNux > div._3wLduG > div > span > div > label > div::before
 public class flipkart {
     String url,productName,productPrice,productRating,imageUrl="",productUrl="",productDesc="";
-    boolean fav=false;
+//    boolean fav=false;
     ArrayList<ItemsList.item> flipkartProducts =new ArrayList<>();
+    ArrayList<ItemsList.item> temp =new ArrayList<>();
     public String getProductName(){
         return productName;
     }
@@ -41,10 +42,15 @@ public class flipkart {
         return url;
     }
     public void searchQuery(){
-            int flag=0; String n="";
+            int flag=0,i=0; String n="";
 
                 try {
-
+//                    while(i<flipkartProducts.size()) {
+//                        if (flipkartProducts.get(i).fav){
+//                            temp.add(flipkartProducts.get(i));
+//                        }
+//                            i++;
+//                    }
                     flipkartProducts.clear();
                     Document document = Jsoup.connect(url).get();
                     Elements content = document.getElementsByClass("E2-pcE _3zjXRo");
@@ -125,6 +131,7 @@ public class flipkart {
 
     }
     public void addProductToList(){
+        int j=0;
         ItemsList.item i = new ItemsList.item();
         i.name=getProductName();
         i.price=getProductPrice();
@@ -133,7 +140,14 @@ public class flipkart {
         i.website="Flipkart";
         i.productUrl="https://www.flipkart.com"+productUrl;
         i.productDesc=this.productDesc;
+//        while(j<temp.size()) {
+//            if (temp.get(j).name.equalsIgnoreCase(i.name) && temp.get(j).fav){
+//                i.fav=true;
+//            }
+//            j++;
+//        }
         flipkartProducts.add(i);
+//        temp.clear();
     }
 
     public ArrayList<ItemsList.item> getProductList(){

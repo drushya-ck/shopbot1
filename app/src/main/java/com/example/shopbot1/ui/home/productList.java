@@ -1,6 +1,7 @@
 package com.example.shopbot1.ui.home;
 
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -20,9 +21,11 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shopbot1.ComparisonPage;
 import com.example.shopbot1.R;
 import com.example.shopbot1.recyclerAdapter;
 import com.example.shopbot1.flipkart;
@@ -237,7 +240,7 @@ public class productList extends AppCompatActivity implements  View.OnClickListe
             //super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
 
-            recyclerAdapter = new recyclerAdapter(mainList);
+            recyclerAdapter = new recyclerAdapter(mainList,getApplicationContext());
             recyclerAdapter.notifyDataSetChanged();
             recyclerView.setAdapter(recyclerAdapter);
 
@@ -294,9 +297,10 @@ public class productList extends AppCompatActivity implements  View.OnClickListe
                 }
             });
         }
-//        mainList=mainList.stream().distinct().collect(Collectors.toList());
+// to be included       mainList=mainList.stream().distinct().collect(Collectors.toList());
         //alternating addition of items from diff e-commerce websites for relevance
         //add comparator to compare price for price- low to high and high to low
         //add comparator to compare rate for popularity
     }
+
 }

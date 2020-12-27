@@ -1,17 +1,26 @@
 package com.example.shopbot1;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shopbot1.ui.home.ItemsList;
+import com.example.shopbot1.ui.home.productList;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -28,13 +37,13 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
         setContentView(R.layout.activity_comparison_page);
         savedInstanceState = getIntent().getExtras();
         firebase fb=new firebase();
-
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("favourites");
         ItemsList.item fobj = (ItemsList.item) getIntent().getSerializableExtra("flipkart_obj");
         ItemsList.item sobj = (ItemsList.item) getIntent().getSerializableExtra("snapdeal_obj");
         itemName=findViewById(R.id.cp_name);
         item_name=savedInstanceState.get("item_name").toString();
         itemName.setText(item_name);
-        final String trim = item_name.replaceAll("[<(\\[{\\\\^\\-=$!|\\]})?*+.>]", "").replace(" ","").trim();
+//        String trim=trimName(item_name);
 
         flipPrice = findViewById(R.id.cp_price_flipkart);
         flipRate = findViewById(R.id.cp_rate_flipkart);
@@ -42,9 +51,30 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
         img=findViewById(R.id.cp_image);
         flipBut=findViewById(R.id.flipkart_web);
         if(fobj!=null){
-            if(fb.existsInFav(trim)){
-                flip_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
-            }
+//            if(fb.existsInFav(trimName(fobj.name))){
+//                flip_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+//                Log.d("exists in fav in cp",fobj.name);
+//            }
+
+            mDatabase.child(trimName(fobj.name)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        flip_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+                        Log.d("firebase_fav",fobj.name+" does  exist in fav");
+                        fobj.fav=true;
+                        //flag=true;
+                    }else{
+                        fobj.fav=false;
+                        Log.d("firebase_fav",fobj.name+" does not exist in fav");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
             flipPrice.setText(fobj.price);
             flipRate.setText(fobj.rating);
 
@@ -62,14 +92,16 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
                 public void onClick(View v) {
                     if(!fobj.fav) {
                         fobj.fav=true;
+                        Toast.makeText(ComparisonPage.this,fobj.name+" marked as Favourite!",Toast.LENGTH_SHORT).show();
                         flip_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
-                        fb.storeFav(fobj,trim);
+                        fb.storeFav(fobj,trimName(fobj.name));
 
                     }
                     else{
                         fobj.fav = false;
+                        Toast.makeText(ComparisonPage.this,fobj.name+" removed from Favourites.",Toast.LENGTH_SHORT).show();;
                         flip_fav.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-                        fb.removeFav(trim);
+                        fb.removeFav(trimName(fobj.name));
                     }
                 }
             });
@@ -82,10 +114,28 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
         snapRate = findViewById(R.id.cp_rate_snapdeal);
         snapBut=findViewById(R.id.snapdeal_web);
         if(sobj!=null){
-            if(fb.existsInFav(trim)){
-                snap_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
-            }
+//            if(fb.existsInFav(trimName(sobj.name))){
+//                snap_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+//            }
+            mDatabase.child(trimName(sobj.name)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        snap_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+                        sobj.fav=true;
+                        Log.d("firebase_fav",sobj.name+" does  exist in fav");
+                        //flag=true;
+                    }else{
+                        sobj.fav=false;
+                        Log.d("firebase_fav",sobj.name+" does not exist in fav");
+                    }
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
             snapPrice.setText(sobj.price);
             snapRate.setText(sobj.rating);
             Picasso.get()
@@ -104,14 +154,16 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
                 public void onClick(View v) {
                     if(!sobj.fav) {
                         sobj.fav=true;
+                        Toast.makeText(ComparisonPage.this,sobj.name+" marked as Favourite!",Toast.LENGTH_SHORT).show();;
                         snap_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
-                        fb.storeFav(sobj,trim);
+                        fb.storeFav(sobj,trimName(sobj.name));
 
                     }
                     else{
                         sobj.fav = false;
+                        Toast.makeText(ComparisonPage.this,sobj.name+" romoved from Favourites.",Toast.LENGTH_SHORT).show();;
                         snap_fav.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-                        fb.removeFav(trim);
+                        fb.removeFav(trimName(sobj.name));
                     }
                 }
             });
@@ -120,4 +172,18 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
         }
 
     }
+    public String trimName(String trim){
+        return trim.replaceAll("[<(\\[{\\\\^\\-=$!|\\]})?*+.>]", "").replace(" ","").trim();
+    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        //your method call
+//        super.onBackPressed();
+//        Intent i=new Intent(this, productList.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("key", "mobiles");
+//        i.putExtras(bundle);
+//        startActivity(i);
+//    }
 }
