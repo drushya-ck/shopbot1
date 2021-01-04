@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+    <item android:title="Website Category:"/>
+
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/flipkart"
+
+            app:actionLayout="@layout/widget_check"
+
+
+            android:title="Flipkart" />
+        <item
+            android:id="@+id/amazon"
+            app:actionLayout="@layout/widget_check"
+
+
+            android:title="Amazon" />
+        <item
+            android:id="@+id/snapdeal"
+            app:actionLayout="@layout/widget_check"
+
+
+            android:title="Snapdeal" />
+
+    </group>
+</menu>

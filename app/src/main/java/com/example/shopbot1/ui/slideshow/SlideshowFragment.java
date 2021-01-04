@@ -45,7 +45,6 @@ public class SlideshowFragment extends Fragment {
     private SlideshowViewModel slideshowViewModel;
     //ConstraintLayout parentLayout;
     ArrayList<ItemsList.item> list = new ArrayList<ItemsList.item>();
-    ;
     RecyclerView recyclerView;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     View root;
@@ -59,10 +58,7 @@ public class SlideshowFragment extends Fragment {
 
         root = inflater.inflate(R.layout.fragment_slideshow, container, false);
         recyclerView = root.findViewById(R.id.recView1);
-
         disp();
-
-
         return root;
     }
 

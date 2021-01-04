@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/fragmentLeft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:name="com.example.shopbot1.ui.home.FragmentLeft"/>
+
+        <fragment
+            android:id="@+id/fragmentRight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:name="com.example.shopbot1.ui.home.FragmentRight"/>
+
+    </LinearLayout>
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_weight="1">
+       <android.widget.Button
+           android:id="@+id/apply1"
+           android:text="Apply11"
+
+
+           android:textColor="#FFFFFF"
+           android:background="@drawable/btnsignin_gradient"
+           android:layout_width="wrap_content"
+           android:layout_height="40dp"
+           android:layout_marginTop="0dp"
+           />
+   </LinearLayout>
+
+</LinearLayout>

@@ -27,10 +27,10 @@ import java.io.Serializable;
 
 public class ComparisonPage extends AppCompatActivity implements Serializable {
     String item_name="",flip_price="",flip_rate="",flip_pdturl="",snap_price="",snap_rate="",snap_pdturl="";
-    TextView itemName,flipPrice,flipRate,snapPrice,snapRate;
+    TextView itemName,flipPrice,flipRate,snapPrice,snapRate,amazPrice,amazeRate;
     ImageView img;
     Button flipBut,snapBut,amazBut;
-    ImageButton flip_fav,snap_fav;
+    ImageButton flip_fav,snap_fav,amaz_fav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +40,7 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("favourites");
         ItemsList.item fobj = (ItemsList.item) getIntent().getSerializableExtra("flipkart_obj");
         ItemsList.item sobj = (ItemsList.item) getIntent().getSerializableExtra("snapdeal_obj");
+        ItemsList.item aobj = (ItemsList.item) getIntent().getSerializableExtra("amazon_obj");
         itemName=findViewById(R.id.cp_name);
         item_name=savedInstanceState.get("item_name").toString();
         itemName.setText(item_name);
@@ -138,9 +139,9 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
             });
             snapPrice.setText(sobj.price);
             snapRate.setText(sobj.rating);
-            Picasso.get()
-                    .load(sobj.img_url)
-                    .into(img);
+//            Picasso.get()
+//                    .load(sobj.img_url)
+//                    .into(img);
             snapBut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -170,6 +171,75 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
         }else{
             snapPrice.setText("No results found.");
         }
+
+        amazPrice = findViewById(R.id.cp_price_amazon);
+        amazeRate = findViewById(R.id.cp_rate_amazon);
+        amaz_fav=findViewById(R.id.amaz_fav);
+        img=findViewById(R.id.cp_image);
+
+        amazBut=findViewById(R.id.amazon_web);
+        if(aobj!=null){
+//            if(fb.existsInFav(trimName(fobj.name))){
+//                flip_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+//                Log.d("exists in fav in cp",fobj.name);
+//            }
+
+            mDatabase.child(trimName(aobj.name)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        amaz_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+                        Log.d("firebase_fav",aobj.name+" does  exist in fav");
+                        aobj.fav=true;
+                        //flag=true;
+                    }else{
+                        aobj.fav=false;
+                        Log.d("firebase_fav",aobj.name+" does not exist in fav");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            amazPrice.setText(aobj.price);
+            amazeRate.setText(aobj.rating);
+            Picasso.get()
+                    .load(aobj.img_url)
+                    .into(img);
+            amazBut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = null;
+                    browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(aobj.productUrl));
+                    startActivity(browserIntent);
+                }
+            });
+
+            amaz_fav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!aobj.fav) {
+                        aobj.fav=true;
+                        Toast.makeText(ComparisonPage.this,aobj.name+" marked as Favourite!",Toast.LENGTH_SHORT).show();
+                        amaz_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+                        fb.storeFav(aobj,trimName(aobj.name));
+
+                    }
+                    else{
+                        aobj.fav = false;
+                        Toast.makeText(ComparisonPage.this,aobj.name+" removed from Favourites.",Toast.LENGTH_SHORT).show();;
+                        amaz_fav.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                        fb.removeFav(trimName(aobj.name));
+                    }
+                }
+            });
+        } else{
+            amazPrice.setText("No results found.");
+        }
+
+
 
     }
     public String trimName(String trim){

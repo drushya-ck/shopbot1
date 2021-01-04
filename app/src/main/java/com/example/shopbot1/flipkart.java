@@ -3,6 +3,7 @@ package com.example.shopbot1;
 import android.content.res.TypedArray;
 import android.util.Log;
 
+import com.example.shopbot1.ui.home.FragmentLeft;
 import com.example.shopbot1.ui.home.ItemsList;
 import com.example.shopbot1.ui.home.productList;
 
@@ -20,7 +21,8 @@ import java.util.regex.Pattern;
 //#container > div > div._3LxdjL._3NzWOH > div._3FqKqJ > div.E2-pcE._3zjXRo > div:nth-child(2) > div:nth-child(2) > div > div > div > a > div.MIXNux > div._3wLduG > div > span > div > label > div::before
 public class flipkart {
     String url,productName,productPrice,productRating,imageUrl="",productUrl="",productDesc="";
-//    boolean fav=false;
+    static public String modifiedKey="";
+    static public String filter="";
     ArrayList<ItemsList.item> flipkartProducts =new ArrayList<>();
     ArrayList<ItemsList.item> temp =new ArrayList<>();
     public String getProductName(){
@@ -41,16 +43,12 @@ public class flipkart {
     public String getUrl(){
         return url;
     }
+    public String getFilter(){return filter;}
     public void searchQuery(){
             int flag=0,i=0; String n="";
 
                 try {
-//                    while(i<flipkartProducts.size()) {
-//                        if (flipkartProducts.get(i).fav){
-//                            temp.add(flipkartProducts.get(i));
-//                        }
-//                            i++;
-//                    }
+
                     flipkartProducts.clear();
                     Document document = Jsoup.connect(url).get();
                     Elements content = document.getElementsByClass("E2-pcE _3zjXRo");
@@ -131,62 +129,67 @@ public class flipkart {
 
     }
     public void addProductToList(){
-        int j=0;
         ItemsList.item i = new ItemsList.item();
         i.name=getProductName();
         i.price=getProductPrice();
         i.rating=getProductRating();
 //        i.img_url=imageUrl;
-        i.website="Flipkart";
+        i.website="flipkart";
         i.productUrl="https://www.flipkart.com"+productUrl;
         i.productDesc=this.productDesc;
-//        while(j<temp.size()) {
-//            if (temp.get(j).name.equalsIgnoreCase(i.name) && temp.get(j).fav){
-//                i.fav=true;
-//            }
-//            j++;
-//        }
         flipkartProducts.add(i);
-//        temp.clear();
     }
 
     public ArrayList<ItemsList.item> getProductList(){
         return flipkartProducts;
     }
 
-    public String filter(ArrayList<String> selectedChipData, List<String> price,List<String> brand){
+
+    public String filter(ArrayList<String> selectedChipData){
 
         int i=0,j=0;
-        String p_temp = "";
-        int p1=0,p2=0;
+        modifiedKey="";
+        String price_url = "",brand_url="",review_url="";
 
-        String price_url = "",brand_url="",filter="";
-        Log.d("filter","inside filter");
         while(i<selectedChipData.size()) {
-          Log.d("filter","inside filter while");
-            if(price.contains(selectedChipData.get(i))) {
-                Pattern p = Pattern.compile("\\d+");
-                Matcher m = p.matcher(selectedChipData.get(i));
-                while (m.find()) {
-                    p_temp += m.group();
-                    p_temp += ",";
+            String s=selectedChipData.get(i);
+            if(!FragmentLeft.sub_selitems.containsKey(s)||FragmentLeft.sub_selitems.get(s)!=productList.subcategory){ continue;}
+
+            if(s.contains("₹")){
+                String[] arr=new String[2];arr[0]="";arr[1]="";
+                if(s.contains("-")){
+                    arr=s.split("-",2);
+                    arr[0]= arr[0].replaceAll("[^0-9]", "");arr[1]= arr[1].replaceAll("[^0-9]", "");
+                }else if(s.contains("Under")){
+                    String s1=s.replaceAll("[^0-9]", "");
+                    arr[0]="Min";arr[1]=s1;
+                }else if(s.contains("Above")){
+                    String s1=s.replaceAll("[^0-9]", "");
+                    arr[0]=s1;arr[1]="Max";
                 }
-                if (!p_temp.isEmpty()) {
-                    p1 = Integer.parseInt(p_temp.split(",")[0]);
-                    p2 = Integer.parseInt(p_temp.split(",")[p_temp.split(",").length - 1]);
-                    price_url="&p%5B%5D=facets.price_range.from%3D"+p1+"&p%5B%5D=facets.price_range.to%3D"+p2;
-                }
-                Log.d("filter", "price modified=" + p1 + "==" + p2+" for "+selectedChipData.get(i));
+                price_url="&p%5B%5D=facets.price_range.from%3D"+arr[0]+"&p%5B%5D=facets.price_range.to%3D"+arr[1];
             }
-            if(brand.contains(selectedChipData.get(i))) {
+
+            else if(Character.isDigit(s.charAt(0))){
+                char c=s.charAt(0);
+                review_url+="&p%5B%5D=facets.rating%255B%255D%3D"+c+"%25E2%2598%2585%2B%2526%2Babove";
+            }
+
+            else if(FragmentLeft.brand_array.contains(s)){
                 brand_url+="&p%5B%5D=facets.brand%255B%255D%3D"+selectedChipData.get(i);
-                Log.d("filter","brand modified="+selectedChipData.get(i));
             }
+
+            else {
+                modifiedKey+=s+"%20";
+            }
+
             i++;
         }
-        filter = price_url + brand_url;
+        filter = price_url + brand_url + review_url ;
         return filter;
     }
+
+
     public String sort(String sortby){
         String sort_url="";
         Log.d("filter","sort in sort");

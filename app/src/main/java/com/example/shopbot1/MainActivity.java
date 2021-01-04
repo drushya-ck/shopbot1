@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.example.shopbot1.ui.gallery.GalleryFragment;
 import com.example.shopbot1.ui.home.HomeFragment;
@@ -12,6 +13,7 @@ import com.example.shopbot1.ui.slideshow.SlideshowFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -25,7 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
-
+    FirebaseAuth firebaseAuth;
     private AppBarConfiguration mAppBarConfiguration;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         final NavigationView navigationView = findViewById(R.id.nav_view);
+        firebaseAuth=FirebaseAuth.getInstance();
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -46,35 +49,46 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 
         NavigationUI.setupWithNavController(navigationView, navController);
-        /*navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                //Fragment fragment=null;
+                Fragment fragment1 = null;
 
-                if(id==R.id.nav_gallery){
-                    Fragment fragment1 = new GalleryFragment();
-                    moveToFragment(fragment1);
-                }
-                else if(id==R.id.nav_slideshow){
-                    //navigationView.findViewById(R.id.nav_slideshow);
-                    Fragment fragment1 = new SlideshowFragment();
-                    moveToFragment(fragment1);
-
-                }
-                else if(id==R.id.nav_home){
-                    //navigationView.findViewById(R.id.nav_home);
-                    Fragment fragment1 = new HomeFragment();
-                    moveToFragment(fragment1);
-                }
-                else {
-                     signout();
-
-                }
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
+                switch (id) {
+                    case R.id.nav_home:
+                        //navigationView.findViewById(R.id.nav_home);
+                         fragment1 = new HomeFragment();
+                        moveToFragment(fragment1);
+                        break;
+                    case R.id.nav_gallery:
+                        fragment1 = new GalleryFragment();
+                        moveToFragment(fragment1);
+                        break;
+                    case  R.id.nav_slideshow:
+                        //navigationView.findViewById(R.id.nav_slideshow);
+                        fragment1 = new SlideshowFragment();
+                        moveToFragment(fragment1);
+                        break;
+                    case R.id.nav_signout:
+                        firebaseAuth.signOut();
+                        Intent intent = new Intent(MainActivity.this, login.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                    default:
+                        break;
+                    }
+                    drawer.closeDrawer(GravityCompat.START);
+                    return true;
             }
-        });*/
+        });
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.nav_userName);
+        navUsername.setText(firebaseAuth.getCurrentUser().getDisplayName());
+        TextView navEmailId = (TextView) headerView.findViewById(R.id.nav_userEmailId);
+        navEmailId.setText(firebaseAuth.getCurrentUser().getEmail());
 
     }
 
@@ -90,11 +104,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-    public void signout(){
-        Intent intent = new Intent(MainActivity.this, login.class);
-        startActivity(intent);
-        finish() ;
     }
     private void moveToFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()

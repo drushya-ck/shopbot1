@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/checkable_list"
+        android:layout_width="match_parent"
+
+        android:layout_height="415dp" />
+    <android.widget.Button
+        android:id="@+id/clearsubfilters"
+        android:text="clear sub filters"
+        android:layout_marginTop="20dp"
+
+        android:background="@drawable/btnsignin_gradient"
+        android:textColor="#FFFFFF"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        />
+    <android.widget.Button
+        android:id="@+id/clearfilters"
+        android:text="clear all filters"
+        android:layout_marginTop="20dp"
+
+        android:textColor="#FFFFFF"
+        android:background="@drawable/btnsignin_gradient"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        />
+
+
+
+
+
+</LinearLayout>

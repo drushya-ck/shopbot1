@@ -54,13 +54,10 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
     Context context;
     flipkart f;
     snapdeal s;
+    amazon a;
     int j=0;
-//    public recyclerAdapter(List<ItemsList.item> moviesList) {
-//        this.moviesList = moviesList;
-//    }
-    public recyclerAdapter(List<ItemsList.item> moviesList, Context context) {
+    public recyclerAdapter(List<ItemsList.item> moviesList) {
         this.moviesList = moviesList;
-        this.context=context;
     }
     @NonNull
     @Override
@@ -84,10 +81,8 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
 
         firebase fb=new firebase();
         final String trim = moviesList.get(position).name.replaceAll("[<(\\[{\\\\^\\-=$!|\\]})?*+.>]", "").replace(" ","").trim();
-//        if(fb.existsInFav(trim)){
-//            holder.fav1.setImageResource(R.drawable.ic_baseline_favorite_24);
-//            Log.d("exists in fav in rv",moviesList.get(position).name);
-//        }
+
+
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("favourites");
         mDatabase.child(trim).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -112,15 +107,12 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
         holder.fav1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Picasso.get()
-                        .load(R.drawable.ic_baseline_favorite_24)
-                        .into(holder.fav1);*/
+
                 if(!moviesList.get(position).fav) {
                     moviesList.get(position).fav = true;
                     Toast.makeText(context,moviesList.get(position).name+" marked as Favourite!",Toast.LENGTH_SHORT).show();
                     holder.fav1.setImageResource(R.drawable.ic_baseline_favorite_24);
-//                    favlist.put("fav", moviesList.get(position).fav);
-                   fb.storeFav(moviesList.get(position),trim);
+                    fb.storeFav(moviesList.get(position),trim);
 
             }
                 else{
@@ -136,6 +128,9 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
         }
         else if(moviesList.get(position).website.equalsIgnoreCase("snapdeal")){
             holder.card_imageView.setImageResource(R.drawable.snapdeal);
+        }
+        else if(moviesList.get(position).website.equalsIgnoreCase("amazon")){
+            holder.card_imageView.setImageResource(R.drawable.amazon);
         }
 
 
@@ -217,9 +212,12 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
 //            view.getContext().startActivity(browserIntent);
             f=new flipkart();
             s=new snapdeal();
+            a=new amazon();
+
             Log.d("namehehe" ,moviesList.get(getAdapterPosition()).name);
             f.setUrl(moviesList.get(getAdapterPosition()).name,"");
             s.setUrl(moviesList.get(getAdapterPosition()).name,"");
+            a.setUrl(moviesList.get(getAdapterPosition()).name,"");
 
             new Thread(new Runnable() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -228,6 +226,8 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
                     j=0;
                     f.searchQuery();
                     s.searchQuery();
+                    a.searchQuery();
+
                     Intent i = new Intent(view.getContext(), ComparisonPage.class);
                     i.putExtra("item_name", moviesList.get(getAdapterPosition()).name);
 
@@ -245,6 +245,16 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHo
                         if (containsWordsArray(s.getProductList().get(j).name,moviesList.get(getAdapterPosition()).name)) {
                            Log.d("snapname" , s.getProductList().get(j).name);
                                 i.putExtra("snapdeal_obj", s.getProductList().get(j));
+                            break;
+                        }
+                        j++;
+                    }
+
+                    j=0;
+                    while(j<a.getProductList().size()) {
+                        if (containsWordsArray(a.getProductList().get(j).name,moviesList.get(getAdapterPosition()).name)) {
+                            Log.d("amazname" , a.getProductList().get(j).name);
+                            i.putExtra("amazon_obj", a.getProductList().get(j));
                             break;
                         }
                         j++;

@@ -68,7 +68,7 @@ public class firebase {
                     list.add(item);
 //                }
                 }
-                recyclerAdapter ra = new recyclerAdapter(list,ac.getApplicationContext());
+                recyclerAdapter ra = new recyclerAdapter(list);
                 rv.setAdapter(ra);
                 DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ac, DividerItemDecoration.VERTICAL);
                 rv.addItemDecoration(dividerItemDecoration);

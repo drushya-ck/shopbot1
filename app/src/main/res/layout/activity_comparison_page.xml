@@ -10,16 +10,30 @@
         android:layout_height="match_parent"
         tools:context=".ComparisonPage">
 
-        <ImageView
-            android:id="@+id/cp_image"
-            android:layout_width="350dp"
-            android:layout_height="281dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="16dp"
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:layout_marginLeft="108dp"
+            android:text="Compare Results"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/cp_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/background" />
+            app:layout_constraintVertical_bias="0.4" />
+
+        <ImageView
+            android:id="@+id/cp_image"
+            android:layout_width="337dp"
+            android:layout_height="305dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/noimage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/cp_name"
@@ -28,34 +42,35 @@
             android:layout_marginStart="37dp"
             android:layout_marginLeft="37dp"
             android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:textColor="@color/style_color_primary_dark"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:background="@color/holo_gray_light"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cp_image" />
 
         <View
             android:id="@+id/divider"
-            android:layout_width="5dp"
+            android:layout_width="3dp"
             android:layout_height="247dp"
             android:layout_marginStart="136dp"
             android:layout_marginLeft="136dp"
-            android:layout_marginTop="450dp"
+            android:layout_marginTop="48dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/cp_name" />
 
         <View
             android:id="@+id/divider2"
-            android:layout_width="5dp"
+            android:layout_width="3dp"
             android:layout_height="243dp"
-            android:layout_marginStart="275dp"
-            android:layout_marginLeft="275dp"
-            android:layout_marginTop="450dp"
+            android:layout_marginStart="272dp"
+            android:layout_marginLeft="272dp"
+            android:layout_marginTop="48dp"
             android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/cp_name" />
 
         <TextView
             android:id="@+id/cp_price_flipkart"
@@ -63,29 +78,29 @@
             android:layout_height="57dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="48dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         <TextView
             android:id="@+id/cp_price_amazon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="39dp"
-            android:layout_marginLeft="39dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="112dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="48dp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/divider"
             app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
         <TextView
             android:id="@+id/cp_price_snapdeal"
-            android:layout_width="95dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="98dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="48dp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/divider2"
             app:layout_constraintTop_toBottomOf="@+id/imageView5" />
@@ -97,6 +112,8 @@
             android:layout_marginStart="28dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textColor="@color/green"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cp_price_flipkart" />
@@ -105,9 +122,11 @@
             android:id="@+id/cp_rate_amazon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="39dp"
-            android:layout_marginLeft="39dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textColor="@color/green"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/divider"
             app:layout_constraintTop_toBottomOf="@+id/cp_price_amazon" />
@@ -116,19 +135,21 @@
             android:id="@+id/cp_rate_snapdeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginLeft="28dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textColor="@color/green"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/divider2"
             app:layout_constraintTop_toBottomOf="@+id/cp_price_snapdeal" />
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="113dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_width="93dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
             android:layout_marginTop="52dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cp_name"
@@ -136,10 +157,10 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="111dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="13dp"
-            android:layout_marginLeft="13dp"
+            android:layout_width="93dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="52dp"
             app:layout_constraintStart_toEndOf="@+id/divider"
             app:layout_constraintTop_toBottomOf="@+id/cp_name"
@@ -147,10 +168,10 @@
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="114dp"
-            android:layout_height="33dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_width="93dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
             android:layout_marginTop="52dp"
             app:layout_constraintStart_toEndOf="@+id/imageView4"
             app:layout_constraintTop_toBottomOf="@+id/cp_name"
@@ -160,14 +181,14 @@
             android:id="@+id/flipkart_web"
             android:layout_width="92dp"
             android:layout_height="52dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/background"
             android:text="Visit website"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cp_rate_flipkart"
-            android:background="@drawable/background"/>
+            app:layout_constraintTop_toBottomOf="@+id/cp_rate_flipkart" />
 
         <Button
             android:id="@+id/amazon_web"
@@ -175,10 +196,10 @@
             android:layout_height="51dp"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/background"
             android:text="Visit website"
             android:textColor="@color/white"
-            android:background="@drawable/background"
             app:layout_constraintStart_toEndOf="@+id/divider"
             app:layout_constraintTop_toBottomOf="@+id/cp_rate_amazon" />
 
@@ -186,9 +207,9 @@
             android:id="@+id/snapdeal_web"
             android:layout_width="90dp"
             android:layout_height="52dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginLeft="28dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/background"
             android:text="Visit website"
             android:textColor="@color/white"
@@ -197,39 +218,39 @@
 
         <ImageButton
             android:id="@+id/flip_fav"
-            android:layout_width="41dp"
-            android:layout_height="34dp"
-            android:layout_marginStart="37dp"
-            android:layout_marginLeft="37dp"
-            android:layout_marginTop="609dp"
+            android:layout_width="37dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="83dp"
+            android:layout_marginRight="83dp"
             android:background="#03FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/cp_price_flipkart"
+            app:layout_constraintEnd_toStartOf="@+id/divider"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
         <ImageButton
             android:id="@+id/amaz_fav"
             android:layout_width="37dp"
-            android:layout_height="34dp"
-            android:layout_marginStart="187dp"
-            android:layout_marginLeft="187dp"
-            android:layout_marginTop="609dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="16dp"
             android:background="#03FFFFFF"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+            app:layout_constraintBottom_toTopOf="@+id/cp_price_amazon"
+            app:srcCompat="@drawable/ic_baseline_favorite_border_24"
+            tools:layout_editor_absoluteX="159dp" />
 
         <ImageButton
             android:id="@+id/snap_fav"
-            android:layout_width="36dp"
-            android:layout_height="33dp"
-            android:layout_marginStart="338dp"
-            android:layout_marginLeft="338dp"
-            android:layout_marginTop="609dp"
+            android:layout_width="33dp"
+            android:layout_height="27dp"
+            android:layout_marginBottom="20dp"
             android:background="#00FFFFFF"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+            app:layout_constraintBottom_toTopOf="@+id/cp_price_snapdeal"
+            app:srcCompat="@drawable/ic_baseline_favorite_border_24"
+            tools:layout_editor_absoluteX="298dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

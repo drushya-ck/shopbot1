@@ -8,12 +8,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shopbot1.MainActivity;
 
 import java.util.ArrayList;
 import com.example.shopbot1.resetpassword;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class login extends AppCompatActivity {
 
@@ -25,8 +31,9 @@ public class login extends AppCompatActivity {
     private Button eLogin;
     private TextView forgotpass;
     private int counter = 5;
+    int flag=0;
     static ArrayList<Credentials> arr=new ArrayList<Credentials>();
-
+    FirebaseAuth firebaseAuth;
     String userName = "";
     String userPassword = "";
 
@@ -53,6 +60,7 @@ public class login extends AppCompatActivity {
         eAttemptsInfo = findViewById(R.id.atvattempts);
         reg=findViewById(R.id.tvSignIn);
         forgotpass=findViewById(R.id.tvForgotPass);
+        firebaseAuth= FirebaseAuth.getInstance();
 
         /* Describe the logic when the login button is clicked */
         eLogin.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +68,7 @@ public class login extends AppCompatActivity {
             public void onClick(View view) {
 
                 /* Obtain user inputs */
-                userName = eName.getText().toString();
+                userName = eName.getText().toString().trim();
                 userPassword = ePassword.getText().toString();
 
                 /* Check if the user inputs are empty */
@@ -72,36 +80,38 @@ public class login extends AppCompatActivity {
                 }else {
 
                     /* Validate the user inputs */
-                    isValid = validate(userName, userPassword);
+//                    isValid = validate(userName, userPassword);
+                    firebaseAuth.signInWithEmailAndPassword(userName,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                Toast.makeText(login.this,"Login successful! ="+user.getEmail()+" and "+user.getEmail().toString().contains(userName),Toast.LENGTH_SHORT).show();
+                                if(user.getEmail().toString().contains(userName))
+                                {
+                                    Toast.makeText(login.this,"flagset",Toast.LENGTH_SHORT).show();
+                                    flag=1;
+                                    startActivity(new Intent(login.this, MainActivity.class));
+                                }
+                            }else{
+                                Toast.makeText(login.this,"Login failed.",Toast.LENGTH_SHORT).show();
+                                counter--;
 
-                    /* Validate the user inputs */
+                                /* Show the attempts remaining */
+                                eAttemptsInfo.setText("Attempts Remaining: " + String.valueOf(counter));
 
-                    /* If not valid */
-                    if (!isValid) {
-
-                        /* Decrement the counter */
-                        counter--;
-
-                        /* Show the attempts remaining */
-                        eAttemptsInfo.setText("Attempts Remaining: " + String.valueOf(counter));
-
-                        /* Disable the login button if there are no attempts left */
-                        if (counter == 0) {
-                            eLogin.setEnabled(false);
-                            Toast.makeText(login.this, "You have used all your attempts try again later!", Toast.LENGTH_LONG).show();
+                                /* Disable the login button if there are no attempts left */
+                                if (counter == 0) {
+                                    eLogin.setEnabled(false);
+                                    Toast.makeText(login.this, "You have used all your attempts try again later!", Toast.LENGTH_LONG).show();
+                                }
+                                /* Display error message */
+                                else {
+                                    Toast.makeText(login.this, "Incorrect credentials, please try again!", Toast.LENGTH_LONG).show();
+                                }
+                            }
                         }
-                        /* Display error message */
-                        else {
-                            Toast.makeText(login.this, "Incorrect credentials, please try again!", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    /* If valid */
-                    else {
-
-                        /* Allow the user in to your app by going into the next activity */
-                        startActivity(new Intent(login.this, MainActivity.class));
-                    }
-
+                    });
                 }
             }
         });
@@ -119,23 +129,5 @@ public class login extends AppCompatActivity {
         });
     }
 
-    /* Validate the credentials */
-    private boolean validate(String userName, String userPassword)
-    {
-        /* Get the object of Credentials class */
-        Credentials credentials1 = new Credentials();
-        credentials1.name="admin";
-        credentials1.password="123";
-        credentials1.phoneno="9999999999";
-        credentials1.email="admin@gmail.com";
 
-        arr.add(credentials1);
-        /* Check the credentials */
-        if((credentials1.name.contains(userName))&& credentials1.password.contains(userPassword))
-        {
-            return true;
-        }
-
-        return false;
-    }
 }
