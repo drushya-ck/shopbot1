@@ -236,21 +236,28 @@
             android:id="@+id/amaz_fav"
             android:layout_width="37dp"
             android:layout_height="32dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginBottom="16dp"
             android:background="#03FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/cp_price_amazon"
-            app:srcCompat="@drawable/ic_baseline_favorite_border_24"
-            tools:layout_editor_absoluteX="159dp" />
+            app:layout_constraintStart_toEndOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
         <ImageButton
             android:id="@+id/snap_fav"
             android:layout_width="33dp"
             android:layout_height="27dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="1dp"
             android:layout_marginBottom="20dp"
             android:background="#00FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/cp_price_snapdeal"
-            app:srcCompat="@drawable/ic_baseline_favorite_border_24"
-            tools:layout_editor_absoluteX="298dp" />
+            app:layout_constraintStart_toEndOf="@+id/divider2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5"
+            app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

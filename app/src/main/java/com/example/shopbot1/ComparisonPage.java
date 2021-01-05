@@ -139,9 +139,10 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
             });
             snapPrice.setText(sobj.price);
             snapRate.setText(sobj.rating);
-//            Picasso.get()
-//                    .load(sobj.img_url)
-//                    .into(img);
+            img.setImageResource(0);
+            Picasso.get()
+                    .load(sobj.img_url)
+                    .into(img);
             snapBut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -205,6 +206,7 @@ public class ComparisonPage extends AppCompatActivity implements Serializable {
             });
             amazPrice.setText(aobj.price);
             amazeRate.setText(aobj.rating);
+            img.setImageResource(0);
             Picasso.get()
                     .load(aobj.img_url)
                     .into(img);
